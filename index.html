@@ -161,15 +161,25 @@ var canvas = document.getElementById("cvs");
 
 var isOfficeReady = false;
 
-try {
-    if (typeof Office !== "undefined") {
-        Office.onReady(function() {
-            isOfficeReady = true;
-            setStatus("Ready", "");
-        });
-    }
-} catch(e) {}
-setTimeout(function() { if (!isOfficeReady) setStatus("Ready", ""); }, 3000);
+function initOffice() {
+    try {
+        if (typeof Office !== "undefined" && Office.onReady) {
+            Office.onReady(function() {
+                isOfficeReady = true;
+                setStatus("Ready", "");
+            });
+        }
+    } catch(e) {}
+}
+initOffice();
+
+// Retry Office init after script loads (async)
+setTimeout(function() {
+    if (!isOfficeReady) initOffice();
+}, 2000);
+setTimeout(function() {
+    if (!isOfficeReady) setStatus("Ready", "");
+}, 4000);
 
 /* ── Filter pills ────────────────────────── */
 document.querySelectorAll(".pill").forEach(function(pill) {
@@ -351,14 +361,35 @@ async function doInsert() {
                 insertBtn.disabled = false;
             });
         } else {
-            setStatus("Copying...", "");
-            var byteChars = atob(base64data);
-            var byteArr = new Uint8Array(byteChars.length);
-            for (var i = 0; i < byteChars.length; i++) byteArr[i] = byteChars.charCodeAt(i);
-            var pngBlob = new Blob([byteArr], { type: "image/png" });
-            await navigator.clipboard.write([new ClipboardItem({ "image/png": pngBlob })]);
-            setStatus("Copied! Paste with Cmd+V ✓", "ok");
-            insertBtn.disabled = false;
+            // Fallback: try Office.js anyway (it may have loaded late)
+            try {
+                Office.context.document.setSelectedDataAsync(base64data, {
+                    coercionType: Office.CoercionType.Image,
+                    imageWidth: parseFloat(sizeSlider.value) * 72,
+                    imageHeight: parseFloat(sizeSlider.value) * 72
+                }, function(result) {
+                    if (result.status === Office.AsyncResultStatus.Succeeded) {
+                        isOfficeReady = true;
+                        setStatus("Inserted ✓", "ok");
+                    } else {
+                        setStatus("Error: " + result.error.message, "err");
+                    }
+                    insertBtn.disabled = false;
+                });
+            } catch(officeErr) {
+                // Last resort: download the image
+                var byteChars = atob(base64data);
+                var byteArr = new Uint8Array(byteChars.length);
+                for (var i = 0; i < byteChars.length; i++) byteArr[i] = byteChars.charCodeAt(i);
+                var blob = new Blob([byteArr], { type: "image/png" });
+                var a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = (selectedIcon.full || "icon").replace(/[:/]/g, "_") + ".png";
+                a.click();
+                URL.revokeObjectURL(a.href);
+                setStatus("Downloaded — drag into your slide", "ok");
+                insertBtn.disabled = false;
+            }
         }
     } catch(err) {
         setStatus("Error: " + err.message, "err");
