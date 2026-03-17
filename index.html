@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Icon Search</title>
-    <script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+    <script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js" async></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -161,11 +161,20 @@ var canvas = document.getElementById("cvs");
 
 var isOfficeReady = false;
 
-Office.onReady(function() { 
-    isOfficeReady = true;
-    document.getElementById("insertBtn").textContent = "Insert into Slide";
-    setStatus("Ready", ""); 
-});
+try {
+    if (typeof Office !== "undefined") {
+        Office.onReady(function() { 
+            isOfficeReady = true;
+            document.getElementById("insertBtn").textContent = "Insert into Slide";
+            setStatus("Ready", ""); 
+        });
+    }
+} catch(e) {}
+
+// Timeout: if Office.js doesn't load in 3s, proceed anyway
+setTimeout(function() {
+    if (!isOfficeReady) setStatus("Ready — use Copy mode", "");
+}, 3000);
 
 /* ── Filter pills ────────────────────────── */
 document.querySelectorAll(".pill").forEach(function(pill) {
