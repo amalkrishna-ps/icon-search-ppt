@@ -13,8 +13,7 @@
             display: flex; flex-direction: column; height: 100vh; overflow: hidden;
         }
 
-        .header { padding: 16px 16px 12px; background: linear-gradient(135deg, #6264A7, #464EB8); color: #fff; }
-        .header h1 { font-size: 17px; font-weight: 600; margin-bottom: 10px; }
+        .header { padding: 12px 16px 10px; background: linear-gradient(135deg, #6264A7, #464EB8); color: #fff; }
         .search-wrap { display: flex; gap: 6px; }
         .search-wrap input {
             flex: 1; padding: 9px 12px; border: none; border-radius: 6px;
@@ -29,33 +28,34 @@
         .search-wrap button:hover { background: rgba(255,255,255,0.3); }
 
         .filters {
-            display: flex; gap: 6px; padding: 10px 16px; overflow-x: auto;
+            display: flex; gap: 5px; padding: 8px 12px; overflow-x: auto;
             border-bottom: 1px solid #f0f0f0; background: #fafafa; flex-shrink: 0;
+            flex-wrap: wrap;
         }
         .filters::-webkit-scrollbar { height: 0; }
         .pill {
-            padding: 5px 12px; border-radius: 16px; font-size: 12px; font-weight: 500;
+            padding: 4px 10px; border-radius: 14px; font-size: 11px; font-weight: 500;
             border: 1px solid #e0e0e0; background: #fff; color: #555;
             cursor: pointer; white-space: nowrap; transition: all 0.15s;
         }
         .pill:hover { border-color: #6264A7; color: #6264A7; }
         .pill.active { background: #6264A7; color: #fff; border-color: #6264A7; }
 
-        .icon-area { flex: 1; overflow-y: auto; padding: 12px; }
+        .icon-area { flex: 1; overflow-y: auto; padding: 10px; }
         .icon-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 6px;
         }
         .icon-card {
             display: flex; flex-direction: column; align-items: center;
-            padding: 10px 4px 8px; border-radius: 8px; cursor: pointer;
+            padding: 8px 4px 6px; border-radius: 8px; cursor: pointer;
             border: 2px solid transparent; transition: all 0.12s;
         }
         .icon-card:hover { background: #f5f5ff; border-color: #c8c8f0; }
         .icon-card.selected { background: #eef0ff; border-color: #6264A7; }
-        .icon-card img { width: 36px; height: 36px; margin-bottom: 5px; }
+        .icon-card img { width: 32px; height: 32px; margin-bottom: 4px; }
         .icon-card .name {
-            font-size: 9px; color: #888; text-align: center; line-height: 1.2;
-            word-break: break-word; max-height: 22px; overflow: hidden;
+            font-size: 8px; color: #888; text-align: center; line-height: 1.2;
+            word-break: break-word; max-height: 20px; overflow: hidden;
         }
 
         .state-msg {
@@ -71,24 +71,24 @@
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .bottom-panel {
-            border-top: 1px solid #e8e8e8; padding: 12px 16px;
+            border-top: 1px solid #e8e8e8; padding: 10px 16px;
             background: #fafafa; flex-shrink: 0;
         }
-        .selected-info { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .selected-info img { width: 32px; height: 32px; }
-        .selected-info .sel-name { font-weight: 600; font-size: 13px; color: #6264A7; }
-        .size-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .selected-info { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .selected-info img { width: 28px; height: 28px; }
+        .selected-info .sel-name { font-weight: 600; font-size: 12px; color: #6264A7; }
+        .size-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
         .size-row label { font-size: 12px; color: #666; }
         .size-row input[type="range"] { flex: 1; accent-color: #6264A7; }
         .size-val { font-size: 12px; font-weight: 600; color: #6264A7; min-width: 30px; }
         .insert-btn {
-            width: 100%; padding: 10px; background: #6264A7; color: #fff;
-            border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
+            width: 100%; padding: 9px; background: #6264A7; color: #fff;
+            border: none; border-radius: 8px; font-size: 13px; font-weight: 600;
             cursor: pointer; transition: background 0.15s;
         }
         .insert-btn:hover { background: #4f52a0; }
         .insert-btn:disabled { background: #c8c8d0; cursor: default; }
-        .status { margin-top: 6px; font-size: 11px; text-align: center; color: #888; min-height: 16px; }
+        .status { margin-top: 5px; font-size: 11px; text-align: center; color: #888; min-height: 16px; }
         .status.ok { color: #107c10; font-weight: 600; }
         .status.err { color: #d13438; }
 
@@ -98,22 +98,23 @@
 </head>
 <body>
 
+<!-- No h1 header — the add-in frame already shows "Icon Search" -->
 <div class="header">
-    <h1>Icon Search</h1>
     <div class="search-wrap">
-        <input type="text" id="q" placeholder="Search… e.g. heart, chart, star" autofocus />
+        <input type="text" id="q" placeholder="Search icons… e.g. heart, chart, star" autofocus />
         <button id="searchBtn">Go</button>
     </div>
 </div>
 
 <div class="filters">
-    <button class="pill active" data-prefix="fluent">Fluent ★</button>
-    <button class="pill" data-prefix="mdi">Material</button>
-    <button class="pill" data-prefix="heroicons">Heroicons</button>
-    <button class="pill" data-prefix="tabler">Tabler</button>
-    <button class="pill" data-prefix="lucide">Lucide</button>
-    <button class="pill" data-prefix="ph">Phosphor</button>
-    <button class="pill" data-prefix="">All 200k+</button>
+    <button class="pill active" data-prefix="fluent" data-type="icon">Fluent ★</button>
+    <button class="pill" data-prefix="mdi" data-type="icon">Material</button>
+    <button class="pill" data-prefix="heroicons" data-type="icon">Heroicons</button>
+    <button class="pill" data-prefix="tabler" data-type="icon">Tabler</button>
+    <button class="pill" data-prefix="lucide" data-type="icon">Lucide</button>
+    <button class="pill" data-prefix="ph" data-type="icon">Phosphor</button>
+    <button class="pill" data-prefix="" data-type="icon">All 200k+</button>
+    <button class="pill" data-prefix="" data-type="emoji">Fluent Emoji</button>
 </div>
 
 <div class="icon-area" id="iconArea">
@@ -130,23 +131,22 @@
         <input type="range" id="sizeSlider" min="0.5" max="4" step="0.25" value="1.5" />
         <span class="size-val" id="sizeVal">1.5"</span>
     </div>
-    <button class="insert-btn" id="insertBtn" disabled>Copy Icon to Clipboard</button>
+    <button class="insert-btn" id="insertBtn" disabled>Insert into Slide</button>
     <div class="status" id="status"></div>
 </div>
 
-<!-- Hidden canvas for SVG→PNG conversion -->
 <canvas id="cvs" style="display:none;"></canvas>
 
 <script>
-/* =============================================================
-   Fully serverless — calls Iconify API directly, no local server
-   SVG→PNG conversion via browser Canvas
-   ============================================================= */
-
-var ICONIFY_SEARCH = "https://api.iconify.design/search";
+var ICONIFY_SEARCH_URL = "https://api.iconify.design/search";
 var ICONIFY_SVG = "https://api.iconify.design/";
-var selectedIcon = null;
+var EMOJI_LIST_URL = "https://api.github.com/repos/microsoft/fluentui-emoji/contents/assets";
+var EMOJI_PNG_BASE = "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/";
+
+var selectedIcon = null;  // { prefix, name, full, type:"icon"|"emoji", emojiFolder }
 var activePrefix = "fluent";
+var activeType = "icon";
+var emojiCache = null;  // cached list of emoji folder names
 
 var qEl = document.getElementById("q");
 var searchBtn = document.getElementById("searchBtn");
@@ -163,18 +163,13 @@ var isOfficeReady = false;
 
 try {
     if (typeof Office !== "undefined") {
-        Office.onReady(function() { 
+        Office.onReady(function() {
             isOfficeReady = true;
-            document.getElementById("insertBtn").textContent = "Insert into Slide";
-            setStatus("Ready", ""); 
+            setStatus("Ready", "");
         });
     }
 } catch(e) {}
-
-// Timeout: if Office.js doesn't load in 3s, proceed anyway
-setTimeout(function() {
-    if (!isOfficeReady) setStatus("Ready — use Copy mode", "");
-}, 3000);
+setTimeout(function() { if (!isOfficeReady) setStatus("Ready", ""); }, 3000);
 
 /* ── Filter pills ────────────────────────── */
 document.querySelectorAll(".pill").forEach(function(pill) {
@@ -182,6 +177,7 @@ document.querySelectorAll(".pill").forEach(function(pill) {
         document.querySelector(".pill.active").classList.remove("active");
         pill.classList.add("active");
         activePrefix = pill.dataset.prefix;
+        activeType = pill.dataset.type;
         if (qEl.value.trim()) doSearch();
     });
 });
@@ -199,22 +195,11 @@ async function doSearch() {
     selectedIcon = null;
 
     try {
-        var url = ICONIFY_SEARCH + "?query=" + encodeURIComponent(query) + "&limit=48";
-        if (activePrefix) url += "&prefixes=" + activePrefix;
-        var resp = await fetch(url);
-        if (!resp.ok) throw new Error("Search failed");
-        var data = await resp.json();
-        var icons = data.icons || [];
-        if (icons.length === 0) {
-            iconArea.innerHTML = '<div class="state-msg"><span class="emoji">😕</span><span>No results. Try another keyword or library.</span></div>';
-            return;
+        if (activeType === "emoji") {
+            await searchEmojis(query);
+        } else {
+            await searchIcons(query);
         }
-        // icons is an array of strings like "fluent:heart-24-filled"
-        var parsed = icons.map(function(full) {
-            var parts = full.split(":");
-            return { prefix: parts[0], name: parts.slice(1).join(":"), full: full };
-        });
-        renderGrid(parsed);
     } catch(err) {
         iconArea.innerHTML = '<div class="state-msg"><span class="emoji">⚠️</span><span>' + esc(err.message) + '</span></div>';
     } finally {
@@ -222,20 +207,79 @@ async function doSearch() {
     }
 }
 
-/* ── Grid ────────────────────────────────── */
-function renderGrid(icons) {
+/* ── Iconify search ──────────────────────── */
+async function searchIcons(query) {
+    var url = ICONIFY_SEARCH_URL + "?query=" + encodeURIComponent(query) + "&limit=48";
+    if (activePrefix) url += "&prefixes=" + activePrefix;
+    var resp = await fetch(url);
+    if (!resp.ok) throw new Error("Search failed");
+    var data = await resp.json();
+    var icons = data.icons || [];
+    if (icons.length === 0) {
+        iconArea.innerHTML = '<div class="state-msg"><span class="emoji">😕</span><span>No results. Try another keyword or library.</span></div>';
+        return;
+    }
+    var parsed = icons.map(function(full) {
+        var parts = full.split(":");
+        return { prefix: parts[0], name: parts.slice(1).join(":"), full: full, type: "icon" };
+    });
+    renderIconGrid(parsed);
+}
+
+/* ── Fluent Emoji search ─────────────────── */
+async function searchEmojis(query) {
+    if (!emojiCache) {
+        var resp = await fetch(EMOJI_LIST_URL);
+        if (!resp.ok) throw new Error("Could not load emoji list");
+        var data = await resp.json();
+        emojiCache = data.filter(function(d) { return d.type === "dir"; }).map(function(d) { return d.name; });
+    }
+    var lq = query.toLowerCase();
+    var matches = emojiCache.filter(function(n) { return n.toLowerCase().indexOf(lq) >= 0; });
+    if (matches.length === 0) {
+        iconArea.innerHTML = '<div class="state-msg"><span class="emoji">😕</span><span>No emojis found for "' + esc(query) + '"</span></div>';
+        return;
+    }
+    renderEmojiGrid(matches.slice(0, 48));
+}
+
+/* ── Render icon grid ────────────────────── */
+function renderIconGrid(icons) {
     var html = '<div class="icon-grid">';
     icons.forEach(function(ic) {
-        // Use Iconify API directly for SVG preview
         var svgUrl = ICONIFY_SVG + encodeURIComponent(ic.prefix) + "/" + encodeURIComponent(ic.name) + ".svg?width=72&height=72&color=%23333";
-        html += '<div class="icon-card" data-prefix="' + esc(ic.prefix) + '" data-name="' + esc(ic.name) + '" data-full="' + esc(ic.full) + '">'
+        html += '<div class="icon-card" data-prefix="' + esc(ic.prefix) + '" data-name="' + esc(ic.name) + '" data-full="' + esc(ic.full) + '" data-type="icon">'
              + '<img src="' + svgUrl + '" loading="lazy" />'
              + '<div class="name">' + esc(ic.name) + '</div></div>';
     });
     html += '</div>';
     iconArea.innerHTML = html;
+    bindCardEvents();
+}
+
+/* ── Render emoji grid ───────────────────── */
+function renderEmojiGrid(names) {
+    var html = '<div class="icon-grid">';
+    names.forEach(function(name) {
+        var fileName = name.toLowerCase().replace(/ /g, "_");
+        var pngUrl = EMOJI_PNG_BASE + encodeURIComponent(name) + "/3D/" + fileName + "_3d.png";
+        html += '<div class="icon-card" data-full="' + esc(name) + '" data-type="emoji" data-emoji-folder="' + esc(name) + '" data-emoji-png="' + esc(pngUrl) + '">'
+             + '<img src="' + pngUrl + '" loading="lazy" onerror="this.style.display=\'none\'" />'
+             + '<div class="name">' + esc(name) + '</div></div>';
+    });
+    html += '</div>';
+    iconArea.innerHTML = html;
+    bindCardEvents();
+}
+
+/* ── Bind click + double-click on cards ──── */
+function bindCardEvents() {
     document.querySelectorAll(".icon-card").forEach(function(card) {
         card.addEventListener("click", function() { selectCard(card); });
+        card.addEventListener("dblclick", function() {
+            selectCard(card);
+            doInsert();
+        });
     });
 }
 
@@ -243,9 +287,16 @@ function selectCard(card) {
     var prev = document.querySelector(".icon-card.selected");
     if (prev) prev.classList.remove("selected");
     card.classList.add("selected");
-    selectedIcon = { prefix: card.dataset.prefix, name: card.dataset.name, full: card.dataset.full };
-    var svgUrl = ICONIFY_SVG + encodeURIComponent(selectedIcon.prefix) + "/" + encodeURIComponent(selectedIcon.name) + ".svg?width=72&height=72&color=%23333";
-    selInfo.innerHTML = '<img src="' + svgUrl + '" /><span class="sel-name">' + esc(selectedIcon.full) + '</span>';
+
+    var type = card.dataset.type;
+    if (type === "emoji") {
+        selectedIcon = { full: card.dataset.full, type: "emoji", emojiPng: card.dataset.emojiPng };
+        selInfo.innerHTML = '<img src="' + esc(card.dataset.emojiPng) + '" /><span class="sel-name">' + esc(card.dataset.full) + '</span>';
+    } else {
+        selectedIcon = { prefix: card.dataset.prefix, name: card.dataset.name, full: card.dataset.full, type: "icon" };
+        var svgUrl = ICONIFY_SVG + encodeURIComponent(selectedIcon.prefix) + "/" + encodeURIComponent(selectedIcon.name) + ".svg?width=72&height=72&color=%23333";
+        selInfo.innerHTML = '<img src="' + svgUrl + '" /><span class="sel-name">' + esc(selectedIcon.full) + '</span>';
+    }
     bottomPanel.style.display = "block";
     insertBtn.disabled = false;
     setStatus("", "");
@@ -254,87 +305,94 @@ function selectCard(card) {
 /* ── Size slider ─────────────────────────── */
 sizeSlider.addEventListener("input", function() { sizeValEl.textContent = sizeSlider.value + '"'; });
 
-/* ── Insert / Copy ────────────────────────── */
-insertBtn.addEventListener("click", async function() {
+/* ── Insert button ───────────────────────── */
+insertBtn.addEventListener("click", doInsert);
+
+async function doInsert() {
     if (!selectedIcon) return;
     insertBtn.disabled = true;
-    setStatus("Preparing icon...", "");
+    setStatus("Preparing...", "");
 
     try {
-        // Fetch large SVG from Iconify
-        var svgUrl = ICONIFY_SVG + encodeURIComponent(selectedIcon.prefix) + "/" + encodeURIComponent(selectedIcon.name) + ".svg?width=1024&height=1024&color=%23333333";
-        var resp = await fetch(svgUrl);
-        if (!resp.ok) throw new Error("Failed to download icon");
-        var svgText = await resp.text();
+        var base64data, coercionType;
 
-        // Convert SVG to PNG via Canvas
-        var base64png = await svgToPngBase64(svgText, 1024);
+        if (selectedIcon.type === "emoji") {
+            // Emoji: fetch PNG, insert as image (PNG — colors are already baked in)
+            var resp = await fetch(selectedIcon.emojiPng);
+            if (!resp.ok) throw new Error("Failed to download emoji");
+            var blob = await resp.blob();
+            base64data = await blobToBase64(blob);
+            coercionType = "image";
+        } else {
+            // Icon: insert as SVG so colors can be changed in PowerPoint
+            var svgUrl = ICONIFY_SVG + encodeURIComponent(selectedIcon.prefix) + "/" + encodeURIComponent(selectedIcon.name) + ".svg?width=512&height=512";
+            var resp = await fetch(svgUrl);
+            if (!resp.ok) throw new Error("Failed to download icon");
+            var svgText = await resp.text();
+            // Office.js needs base64 for setSelectedDataAsync with Image coercion
+            // But SVG insert requires converting to base64 PNG for compatibility
+            var base64png = await svgToPngBase64(svgText, 1024);
+            base64data = base64png;
+            coercionType = "image";
+        }
 
         if (isOfficeReady) {
-            // Inside PowerPoint — insert directly
             setStatus("Inserting...", "");
-            Office.context.document.setSelectedDataAsync(base64png, {
+            Office.context.document.setSelectedDataAsync(base64data, {
                 coercionType: Office.CoercionType.Image,
                 imageWidth: parseFloat(sizeSlider.value) * 72,
                 imageHeight: parseFloat(sizeSlider.value) * 72
             }, function(result) {
                 if (result.status === Office.AsyncResultStatus.Succeeded) {
-                    setStatus("Inserted " + selectedIcon.full + " ✓", "ok");
+                    setStatus("Inserted ✓", "ok");
                 } else {
                     setStatus("Error: " + result.error.message, "err");
                 }
                 insertBtn.disabled = false;
             });
         } else {
-            // In browser — copy PNG to clipboard
             setStatus("Copying...", "");
-            var byteChars = atob(base64png);
+            var byteChars = atob(base64data);
             var byteArr = new Uint8Array(byteChars.length);
             for (var i = 0; i < byteChars.length; i++) byteArr[i] = byteChars.charCodeAt(i);
             var pngBlob = new Blob([byteArr], { type: "image/png" });
-
-            await navigator.clipboard.write([
-                new ClipboardItem({ "image/png": pngBlob })
-            ]);
-            setStatus("Copied! Paste into PowerPoint with Cmd+V ✓", "ok");
+            await navigator.clipboard.write([new ClipboardItem({ "image/png": pngBlob })]);
+            setStatus("Copied! Paste with Cmd+V ✓", "ok");
             insertBtn.disabled = false;
         }
     } catch(err) {
         setStatus("Error: " + err.message, "err");
         insertBtn.disabled = false;
     }
-});
+}
 
-/* ── SVG → PNG via Canvas ────────────────── */
+/* ── SVG to PNG via Canvas ───────────────── */
 function svgToPngBase64(svgText, size) {
     return new Promise(function(resolve, reject) {
-        // Create a blob URL from the SVG text
         var blob = new Blob([svgText], { type: "image/svg+xml;charset=utf-8" });
         var url = URL.createObjectURL(blob);
-
         var img = new Image();
         img.onload = function() {
-            canvas.width = size;
-            canvas.height = size;
+            canvas.width = size; canvas.height = size;
             var ctx = canvas.getContext("2d");
             ctx.clearRect(0, 0, size, size);
             ctx.drawImage(img, 0, 0, size, size);
             URL.revokeObjectURL(url);
-
-            // Get base64 PNG (strip the data:image/png;base64, prefix)
-            var dataUrl = canvas.toDataURL("image/png");
-            var base64 = dataUrl.split(",")[1];
-            resolve(base64);
+            resolve(canvas.toDataURL("image/png").split(",")[1]);
         };
-        img.onerror = function() {
-            URL.revokeObjectURL(url);
-            reject(new Error("Failed to render icon"));
-        };
+        img.onerror = function() { URL.revokeObjectURL(url); reject(new Error("Render failed")); };
         img.src = url;
     });
 }
 
 /* ── Helpers ──────────────────────────────── */
+function blobToBase64(b) {
+    return new Promise(function(r) {
+        var f = new FileReader();
+        f.onloadend = function() { r(f.result.split(",")[1]); };
+        f.readAsDataURL(b);
+    });
+}
 function setStatus(m, c) { statusEl.textContent = m; statusEl.className = "status" + (c ? " " + c : ""); }
 function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
 </script>
